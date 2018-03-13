@@ -1,13 +1,13 @@
-import { Router } from 'express'
-import { middleware as query } from 'querymen'
-import { middleware as body } from 'bodymen'
-import { master, token } from '../../services/passport'
-import { create, index, show, update, destroy } from './controller'
-import { schema } from './model'
-export Article, { schema } from './model'
+import { Router } from "express";
+import { middleware as query } from "querymen";
+import { middleware as body } from "bodymen";
+import { master, token } from "../../services/passport";
+import { create, index, show, update, destroy } from "./controller";
+import { schema } from "./model";
+export Article, { schema } from "./model";
 
-const router = new Router()
-const { title, content } = schema.tree
+const router = new Router();
+const { title, content } = schema.tree;
 
 /**
  * @api {post} /articles Create article
@@ -19,13 +19,10 @@ const { title, content } = schema.tree
  * @apiParam content Article's content.
  * @apiSuccess {Object} article Article's data.
  * @apiError {Object} 400 Some parameters may contain invalid values.
- * @apiError 404 Article not found.
+ * @apiError 404 Article not found
  * @apiError 401 master access only.
  */
-router.post('/',
-  master(),
-  body({ title, content }),
-  create)
+router.post("/", master(), body({ title, content }), create);
 
 /**
  * @api {get} /articles Retrieve articles
@@ -39,10 +36,7 @@ router.post('/',
  * @apiError {Object} 400 Some parameters may contain invalid values.
  * @apiError 401 admin access only.
  */
-router.get('/',
-  token({ required: true, roles: ['admin'] }),
-  query(),
-  index)
+router.get("/", token({ required: true, roles: ["admin"] }), query(), index);
 
 /**
  * @api {get} /articles/:id Retrieve article
@@ -55,9 +49,7 @@ router.get('/',
  * @apiError 404 Article not found.
  * @apiError 401 admin access only.
  */
-router.get('/:id',
-  token({ required: true, roles: ['admin'] }),
-  show)
+router.get("/:id", token({ required: true, roles: ["admin"] }), show);
 
 /**
  * @api {put} /articles/:id Update article
@@ -72,10 +64,7 @@ router.get('/:id',
  * @apiError 404 Article not found.
  * @apiError 401 master access only.
  */
-router.put('/:id',
-  master(),
-  body({ title, content }),
-  update)
+router.put("/:id", master(), body({ title, content }), update);
 
 /**
  * @api {delete} /articles/:id Delete article
@@ -87,8 +76,6 @@ router.put('/:id',
  * @apiError 404 Article not found.
  * @apiError 401 master access only.
  */
-router.delete('/:id',
-  master(),
-  destroy)
+router.delete("/:id", master(), destroy);
 
-export default router
+export default router;
